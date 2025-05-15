@@ -6,6 +6,9 @@ import { readFile } from "fs/promises"
 
 // Create a devnet connection
 const umi = createUmi('https://api.devnet.solana.com');
+// const umi = createUmi(
+//     "https://turbine-solanad-4cde.devnet.rpcpool.com/168dd64f-ce5e-4e19-a836-f6482ad6b396"
+// );
 
 let keypair = umi.eddsa.createKeypairFromSecretKey(new Uint8Array(wallet));
 const signer = createSignerFromKeypair(umi, keypair);
@@ -16,14 +19,14 @@ umi.use(signerIdentity(signer));
 (async () => {
     try {
         //1. Load image
-        //2. Convert image to generic file.
-        //3. Upload image
-
         const image = await readFile("./sabb.jpg");
 
+        //2. Convert image to generic file.
         const file = createGenericFile(image, "sabb.jpg", { contentType: "image/jpg" });
 
+        //3. Upload image
         const [myUri] = await umi.uploader.upload([ file ])
+
         console.log("Your image URI: ", myUri);
 
         const irysURI = myUri.replace(

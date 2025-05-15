@@ -41,8 +41,8 @@ umi.use(signerIdentity(signer));
             },
             creators: []
         };
-        // const myUri = ???
-        // console.log("Your metadata URI: ", myUri);
+        const myUri = umi.uploader.uploadJson(metadata);
+        console.log("Your metadata URI: ", myUri);
     }
     catch(error) {
         console.log("Oops.. Something went wrong", error);
